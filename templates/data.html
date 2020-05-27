@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'datstyle2.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="icon" type="image/x-icon" href="http://raptors.p.lodz.pl/favicon.png">
+    <script src="https://kit.fontawesome.com/ed8b51afb9.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap&subset=latin-ext"
+        rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+{% if user.is_authenticated %}
+    <a href="{%  url 'select' %}" class="back"><i class="fas fa-chevron-circle-left"></i></a>
+        <header>
+            <img src="{% static "raptuś_Obszar roboczy 1.png" %}" alt="raptors logo">
+        </header>
+        <div class="optionsDiv">
+            <span>Filter by status: </span>
+            <select id="selectField" onchange="myFunction()">
+                <option value="to do"  selected>All</option>
+                <option value="to do">to do</option>
+                <option value="in progress">in progress</option>
+                <option value="done">done</option>
+            </select>
+        </div>
+    <table class="table table-bordered" border="1" id="myTable">
+        <tr><td colspan="8" class="title" id="mainHeader">TASKS</td></tr>
+        <tr class="header" id="titles">
+            <td>ID</td>
+            <td>Priority Weight</td>
+            <td>Name</td>
+            <td>Status</td>
+        </tr>
+            {% for tasks in list %}
+            <tr class="filtering">
+                <td>{{ tasks.id }}</td>
+                <td>{{ tasks.priority.weight }}</td>
+                <td>{{ tasks.name }}</td>
+                <td class="ourStatus">{{ tasks.status }}</td>
+{#                <td>{{ tasks.userID }}</td>#}
+            </tr>
+        {% endfor %}
+ </table>
+    <script src="{% static 'script2.js' %}"></script>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+</body>
+</html>
